@@ -99,70 +99,71 @@ search()
 # Notice that package:ggplot2 is now added to the search list.
 
 
-### A Simple Regression Example   
+### 一个简单的回归案例  
 
-# Look at the data sets that come with the package.
+# 查看包附带的数据集
 data(package = "ggplot2")$results
 # Note that the results in RTVS may pop up, or pop under, in a new window.
 
-# ggplot2 contains a dataset called diamonds. Make this dataset available using the data() function.
+# 使用data()函数导入ggplot2的diamonds数据集
 data(diamonds, package = "ggplot2")
 
-# Create a listing of all objects in the "global environment". Look for "diamonds" in the results.
+#生成全局环境里面的所有对象的列表，可以看到diamonds在里面
 ls()
 
 # Now investigate the structure of diamonds, a data frame with 53,940 observations
+# 研究diamonds的结构
 str(diamonds)
 
-# Print the first few rows.
-head(diamonds) 
+# 输出前面几行
+head(diamonds)
 
-# Print the last 6 lines.  
+# 输出最后6行
 tail(diamonds)
 
 # Find out what kind of object it is.
 class(diamonds)
 
-# Look at the dimension of the data frame.
+# 查看data frame的维度
 dim(diamonds)
 
 
 ### Plots in R       
 
-# Create a random sample of the diamonds data.
+# 使用diamonds的数据创建一个随机数据集
 diamondSample <- diamonds[sample(nrow(diamonds), 5000),]
 dim(diamondSample)
 
 # R has three systems for static graphics: base graphics, lattice and ggplot2.  
 # This example uses ggplot2
 
-# Set the font size so that it will be clearly legible.
+# 设定字体大小
 theme_set(theme_gray(base_size = 18))
 
 # In this sample you use ggplot2.
+# 开始使用ggplot2函数
 ggplot(diamondSample, aes(x = carat, y = price)) +
   geom_point(colour = "blue")
 
-# Add a log scale.
+# 添加log scale
 ggplot(diamondSample, aes(x = carat, y = price)) +
   geom_point(colour = "blue") +
   scale_x_log10()
 
-# Add a log scale for both scales.
+# 为两个scale都添加log scale
 ggplot(diamondSample, aes(x = carat, y = price)) +
   geom_point(colour = "blue") +
   scale_x_log10() +
   scale_y_log10()
 
-### Linear Regression in R 
-
-# Now, build a simple regression model, examine the results of the model and plot the points and the regression line.  
-
+### R 中的线性回归
+ 
+# 创建一个回归模型，检查模型的结果并且画出点和回归线
 # Build the model. log of price explained by log of carat. This illustrates how linear regression works. Later we fit a model that includes the remaining variables
 
 model <- lm(log(price) ~ log(carat) , data = diamondSample)       
 
-# Look at the results.     
+# 查看结果     
 summary(model) 
 # R-squared = 0.9334, i.e. model explains 93.3% of variance
 
@@ -177,7 +178,6 @@ ggplot(diamondSample, aes(x = carat, y = price)) +
   geom_smooth(method = "lm", colour = "red", size = 2) +
   scale_x_log10() +
   scale_y_log10()
-
 
 ### Regression Diagnostics 
 
